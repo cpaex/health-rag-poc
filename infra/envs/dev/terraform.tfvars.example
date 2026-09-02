@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars and adjust. terraform.tfvars is gitignored.
+
+aws_region  = "us-east-1"
+aws_profile = ""            # leave empty to use the default credential chain
+name_prefix = "clinical-rag-dev"
+
+titan_embedding_model_id = "amazon.titan-embed-text-v2:0"

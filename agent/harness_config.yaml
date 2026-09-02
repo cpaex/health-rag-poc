@@ -1,0 +1,25 @@
+# AgentCore Harness config (SPEC.md §3). Populated in Phase 6 from Terraform outputs.
+# Values left blank are filled by scripts/deploy.sh after `terraform apply`.
+
+model:
+  # Verify model id against the Bedrock catalog at build time.
+  id: ""                       # e.g. a Claude model id on Bedrock
+  region: us-east-1
+
+system_prompt_ref: agent/system_prompt.md
+
+memory:
+  arn: ""                      # aws_bedrockagentcore_memory output
+
+gateway:
+  arn: ""                      # aws_bedrockagentcore_gateway output
+
+guardrail:
+  id: ""                       # bedrock guardrail id
+  version: ""
+
+tools:
+  - kb_hybrid_retrieve
+  - ontology_lookup
+  - fhir_query
+  - rerank

@@ -1,0 +1,1 @@
+{"_comment": "Phase 7: replace with >=10 real cases. Cover: pure-dense, pure-sparse/ontology, multi-step follow-up retrieval, and >=1 guardrail-refusal case. Schema below.", "question": "", "patient_scope": "", "expected_citations": [], "expected_answer_contains": []}

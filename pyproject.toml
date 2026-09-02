@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clinical-agentic-rag"
+version = "0.1.0"
+description = "Agentic hybrid-retrieval RAG over synthetic clinical notes on Amazon Bedrock AgentCore"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT-0" }
+
+# Runtime dependencies. Versions are intentionally lower-bounded, not pinned, at
+# scaffold time; Phase 1+ pins them once the resources they talk to are verified.
+dependencies = [
+    "boto3>=1.35",
+    "botocore>=1.35",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "strands-agents>=0.1",          # Strands Agents SDK ("Agent-as-Tools" supervisor)
+    "httpx>=0.27",                  # mocked FHIR client
+]
+
+[project.optional-dependencies]
+ingestion = [
+    "psycopg[binary]>=3.2",        # Aurora access via RDS Data API is boto3; psycopg used for local/dev direct SQL
+]
+ui = [
+    "streamlit>=1.36",
+]
+evals = [
+    "ragas>=0.2",
+    "datasets>=2.19",
+]
+mockfhir = [
+    "fastapi>=0.111",
+    "uvicorn>=0.30",
+]
+dev = [
+    "pytest>=8.2",
+    "pytest-cov>=5.0",
+    "moto[s3,iam,sts,secretsmanager]>=5.0",
+    "ruff>=0.5",
+    "mypy>=1.10",
+]
+
+[tool.setuptools.packages.find]
+include = ["agent*", "ingestion*", "evals*"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+markers = [
+    "aws: integration test that makes real AWS calls; requires credentials and a deployed dev environment (deselect with '-m \"not aws\"')",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+ignore_missing_imports = true

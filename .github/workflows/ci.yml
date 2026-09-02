@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      - run: pytest -m "not aws"
+      # Phase 7: add `python evals/run_ragas_ci.py` as a required check.
+
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: terraform fmt + validate
+        working-directory: infra/envs/dev
+        run: |
+          terraform fmt -check -recursive ../..
+          terraform init -backend=false
+          terraform validate
+      # Phase 1: add tflint over infra/ changes (SPEC.md §10).
