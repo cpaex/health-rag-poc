@@ -1,8 +1,8 @@
 # dev environment composition (SPEC.md §5).
 #
 # Modules are enabled phase by phase. Keep `terraform plan` clean at every step.
-#   Phase 1 (ACTIVE): network, data_aurora, ingestion
-#   Phase 2:          knowledge_base
+#   Phase 1: network, data_aurora, ingestion
+#   Phase 2 (ACTIVE): knowledge_base
 #   Phase 5:          guardrails
 #   Phase 6:          agentcore, observability
 
@@ -34,13 +34,21 @@ module "ingestion" {
 # ---------------------------------------------------------------------------
 # Phase 2 — Knowledge Base
 # ---------------------------------------------------------------------------
-# module "knowledge_base" {
-#   source               = "../../modules/knowledge_base"
-#   name_prefix          = var.name_prefix
-#   aurora_cluster_arn   = module.data_aurora.cluster_arn
-#   aurora_secret_arn    = module.data_aurora.secret_arn
-#   raw_notes_bucket_arn = module.ingestion.raw_notes_bucket_arn
-# }
+module "knowledge_base" {
+  source = "../../modules/knowledge_base"
+
+  name_prefix          = var.name_prefix
+  aurora_cluster_arn   = module.data_aurora.cluster_arn
+  aurora_secret_arn    = module.data_aurora.secret_arn
+  aurora_database_name = module.data_aurora.database_name
+  raw_notes_bucket_arn = module.ingestion.raw_notes_bucket_arn
+
+  embedding_model_id = var.titan_embedding_model_id
+
+  # Ensure the §4 schema bootstrap (null_resource in data_aurora) completes
+  # before Bedrock's create-time preflight against the Aurora table.
+  depends_on = [module.data_aurora]
+}
 
 # ---------------------------------------------------------------------------
 # Phase 5 — Guardrails

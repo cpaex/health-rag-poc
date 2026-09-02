@@ -39,7 +39,13 @@ output "ingestion_role_arn" {
 }
 
 # ── Phase 2 ────────────────────────────────────────────────────────────────
-# output "knowledge_base_id" { value = module.knowledge_base.knowledge_base_id }
+output "knowledge_base_id" {
+  value = module.knowledge_base.knowledge_base_id
+}
+
+output "knowledge_base_data_source_id" {
+  value = module.knowledge_base.data_source_id
+}
 
 # ── Phase 5 ────────────────────────────────────────────────────────────────
 # output "bedrock_guardrail_id"      { value = module.guardrails.guardrail_id }

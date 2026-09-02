@@ -14,7 +14,7 @@ Amazon Bedrock AgentCore. See [SPEC.md](SPEC.md) for the full build specificatio
 |---|---|---|
 | 0 | Scaffold: repo structure, `pyproject.toml`, `.env.example`, green empty test suite | ✅ done |
 | 1 | Terraform foundation: network + Aurora + S3 + IAM | 🟡 code written; `validate`+`tflint` clean; `plan`/`apply` pending AWS creds |
-| 2 | Bedrock Knowledge Base wired to Aurora (hybrid search) | ⬜ |
+| 2 | Bedrock Knowledge Base wired to Aurora (hybrid search) | 🟡 module written; `validate`+`tflint` clean; apply + smoke test pending |
 | 3 | Ingestion pipeline + seed data | ⬜ |
 | 4 | Supervisor agent + 4 tools (local mode) | ⬜ |
 | 5 | Guardrails + mocked identity/scope enforcement | ⬜ |
