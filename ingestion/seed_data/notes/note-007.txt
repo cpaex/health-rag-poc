@@ -1,0 +1,26 @@
+Pulmonology Clinic Note
+Patient: Nguyen, Aisha K    MRN-0030003
+Encounter date: 2025-03-08
+Provider: Dr. S. Beaulieu
+
+HPI:
+33-year-old woman with moderate persistent asthma, here for routine review. Two
+nighttime awakenings per week from cough, rescue inhaler use about three times per
+week. No recent exacerbations requiring steroids. Cat at home. Adherent to
+controller inhaler most days. Peak flow today 380 L/min, personal best 430.
+
+Assessment:
+1. Moderate persistent asthma, partially controlled (ACT score 18).
+2. Probable environmental trigger from cat dander.
+
+Plan:
+- Step up to fluticasone 110 mcg, 2 puffs twice daily.
+- Add montelukast 10 mg nightly.
+- Albuterol as needed; review inhaler technique, spacer provided.
+- Allergen avoidance counseling; consider allergy referral if not improved.
+- Follow up in 6 weeks with repeat ACT and peak flow.
+
+Medications:
+- fluticasone 110 mcg, 2 puffs BID (increased)
+- montelukast 10 mg PO QHS (new)
+- albuterol HFA 90 mcg, 2 puffs q4h PRN

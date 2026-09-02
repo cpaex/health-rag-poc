@@ -1,8 +1,12 @@
 # Clinical Agentic RAG Starter
 
 An agentic, hybrid-retrieval RAG platform over **synthetic** clinical notes, built on
-Amazon Bedrock AgentCore. See [SPEC.md](SPEC.md) for the full build specification and
-[docs/](docs/) for the architecture document and glossary (if supplied).
+Amazon Bedrock AgentCore. See [SPEC.md](SPEC.md) for the full build specification,
+[DEPLOY.md](DEPLOY.md) for the deploy-it-for-real runbook, and [docs/](docs/) for the
+architecture document and glossary (if supplied).
+
+> The repo build creates **local files only** — no `terraform apply`, no billable AWS
+> calls. Every deployment step lives in [DEPLOY.md](DEPLOY.md).
 
 > ⚠️ Development uses **synthetic FHIR data only**. No real PHI is processed. The
 > de-identification and ontology-linking code paths run against Amazon Comprehend
@@ -12,11 +16,11 @@ Amazon Bedrock AgentCore. See [SPEC.md](SPEC.md) for the full build specificatio
 
 | Phase | Scope | State |
 |---|---|---|
-| 0 | Scaffold: repo structure, `pyproject.toml`, `.env.example`, green empty test suite | ✅ done |
-| 1 | Terraform foundation: network + Aurora + S3 + IAM | 🟡 code written; `validate`+`tflint` clean; `plan`/`apply` pending AWS creds |
-| 2 | Bedrock Knowledge Base wired to Aurora (hybrid search) | 🟡 module written; `validate`+`tflint` clean; apply + smoke test pending |
-| 3 | Ingestion pipeline + seed data | ⬜ |
-| 4 | Supervisor agent + 4 tools (local mode) | ⬜ |
+| 0 | Scaffold: repo structure, `pyproject.toml`, `.env.example`, `DEPLOY.md` skeleton, green test suite | ✅ done |
+| 1 | Terraform foundation: network + Aurora + S3 + IAM | ✅ modules written; `validate`+`tflint` clean; deploy → [DEPLOY.md §1](DEPLOY.md) |
+| 2 | Bedrock Knowledge Base wired to Aurora (hybrid search) | ✅ module + `kb_smoke_test.py` written; `validate`+`tflint` clean; deploy → [DEPLOY.md §2](DEPLOY.md) |
+| 3 | Ingestion pipeline + seed data | ✅ seed data + pipeline + `seed_demo_data.sh` (`--dry-run` works); unit-tested; deploy → [DEPLOY.md §3](DEPLOY.md) |
+| 4 | Supervisor agent + 4 tools (local mode) | ✅ Strands supervisor + 4 tools + multi-step strategy + mock FHIR server; unit-tested (incl. contrast-dye sequence); live run → [DEPLOY.md §4](DEPLOY.md) |
 | 5 | Guardrails + mocked identity/scope enforcement | ⬜ |
 | 6 | AgentCore deployment | ⬜ |
 | 7 | Evaluation: golden set, RAGAS CI, Bedrock Evaluations | ⬜ |
@@ -44,6 +48,7 @@ scripts/     prereq / deploy / seed helpers
 
 ## Cost warning
 
-Phase 1 onward provisions real AWS resources (Aurora Serverless v2, Bedrock KB,
-AgentCore runtime, guardrails). Nothing in this repo runs `terraform apply` or any
-billable command without explicit confirmation.
+The deployed stack provisions real AWS resources (Aurora Serverless v2, Bedrock KB,
+AgentCore runtime, guardrails). **The repo build never runs `terraform apply` or any
+billable command** — deployment is a separate, deliberate step you run from
+[DEPLOY.md](DEPLOY.md), which includes a standing-cost estimate and a teardown section.

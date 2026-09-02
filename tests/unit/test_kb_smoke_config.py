@@ -2,25 +2,16 @@
 
 from __future__ import annotations
 
-import importlib.util
-from pathlib import Path
-
-_spec = importlib.util.spec_from_file_location(
-    "kb_smoke_test", Path(__file__).resolve().parents[2] / "scripts" / "kb_smoke_test.py"
-)
-kb_smoke_test = importlib.util.module_from_spec(_spec)
-_spec.loader.exec_module(kb_smoke_test)
+from agent.tools.kb_hybrid_retrieve import build_retrieval_config
 
 
 def test_hybrid_search_always_requested() -> None:
-    cfg = kb_smoke_test.build_retrieval_config(top_k=5, patient_scope=None)
-    vsc = cfg["vectorSearchConfiguration"]
+    vsc = build_retrieval_config(top_k=5, patient_scope=None)["vectorSearchConfiguration"]
     assert vsc["overrideSearchType"] == "HYBRID"
     assert vsc["numberOfResults"] == 5
     assert "filter" not in vsc
 
 
 def test_patient_scope_becomes_equals_filter() -> None:
-    cfg = kb_smoke_test.build_retrieval_config(top_k=3, patient_scope="patient-001")
-    vsc = cfg["vectorSearchConfiguration"]
+    vsc = build_retrieval_config(top_k=3, patient_scope="patient-001")["vectorSearchConfiguration"]
     assert vsc["filter"] == {"equals": {"key": "patient_scope", "value": "patient-001"}}

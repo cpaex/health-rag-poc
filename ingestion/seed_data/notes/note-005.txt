@@ -1,0 +1,24 @@
+Anticoagulation Clinic Note
+Patient: Okafor, James R    MRN-0020002
+Encounter date: 2025-01-22
+Provider: R. Alvarez, PharmD
+
+HPI:
+Interval INR check one week after furosemide increase for heart failure. No
+bleeding, no bruising, no dark stools. No new medications or antibiotics. Diet
+unchanged. Reports one missed warfarin dose on Sunday.
+
+Assessment:
+INR today 3.4, above the target range of 2.0 to 3.0, in the setting of a missed
+dose pattern and diuretic change. No bleeding.
+
+Plan:
+- Hold warfarin today only.
+- Resume warfarin at a reduced weekly dose: 5 mg on 5 days and 2.5 mg on 2 days.
+- Recheck INR in 7 days.
+- Counseled on consistent daily dosing and vitamin K intake.
+
+Medications:
+- warfarin, revised schedule as above
+- furosemide 40 mg PO BID
+- metoprolol succinate 50 mg PO daily

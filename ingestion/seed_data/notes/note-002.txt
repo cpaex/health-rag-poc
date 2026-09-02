@@ -1,0 +1,26 @@
+Endocrinology Follow-up
+Patient: Tavares, Maria L    MRN-0010001
+Encounter date: 2024-11-02
+Provider: Dr. P. Okonkwo
+
+HPI:
+Type 2 diabetes, on metformin monotherapy. Home glucose logs show fasting values
+130-160 mg/dL. No hypoglycemia. Weight stable. Mild peripheral neuropathy
+symptoms in both feet, worse at night.
+
+Assessment:
+1. Type 2 diabetes mellitus, above target. A1c today 7.4%.
+2. Essential hypertension, controlled on lisinopril.
+3. Probable diabetic peripheral neuropathy.
+
+Plan:
+- Continue metformin 1000 mg twice daily.
+- Continue lisinopril 10 mg daily.
+- Start gabapentin 300 mg at night for neuropathic symptoms, titrate as tolerated.
+- Reinforce foot care. Podiatry referral placed.
+- Recheck A1c in 3 months.
+
+Medications:
+- metformin 1000 mg PO BID
+- lisinopril 10 mg PO daily
+- gabapentin 300 mg PO QHS (new)

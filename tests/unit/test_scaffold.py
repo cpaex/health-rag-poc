@@ -13,6 +13,7 @@ EXPECTED_PATHS = [
     ".env.example",
     "README.md",
     "SPEC.md",
+    "DEPLOY.md",
     "infra/envs/dev",
     "infra/modules/network",
     "infra/modules/data_aurora",
@@ -29,8 +30,11 @@ EXPECTED_PATHS = [
     "ingestion/seed_data/fhir",
     "ingestion/seed_data/notes",
     "agent/supervisor.py",
+    "agent/retrieval_strategy.py",
+    "agent/models.py",
     "agent/identity.py",
     "agent/runtime_entrypoint.py",
+    "mocks/fhir_server.py",
     "agent/system_prompt.md",
     "agent/harness_config.yaml",
     "agent/tools/kb_hybrid_retrieve.py",
@@ -44,6 +48,9 @@ EXPECTED_PATHS = [
     "scripts/prereq.sh",
     "scripts/deploy.sh",
     "scripts/seed_demo_data.sh",
+    "scripts/apply_sql.py",
+    "scripts/kb_smoke_test.py",
+    "scripts/run_mock_fhir.sh",
 ]
 
 

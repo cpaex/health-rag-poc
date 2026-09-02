@@ -1,0 +1,84 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "id": "seed-patient-002",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-002",
+        "identifier": [{ "system": "urn:mrn", "value": "MRN-0020002" }],
+        "name": [{ "family": "Okafor", "given": ["James", "R"] }],
+        "gender": "male",
+        "birthDate": "1949-11-30",
+        "telecom": [{ "system": "phone", "value": "781-555-0198", "use": "mobile" }],
+        "address": [{ "line": ["1200 Harbor Rd", "Apt 6"], "city": "Revere", "state": "MA", "postalCode": "02151" }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-002-chf",
+        "subject": { "reference": "Patient/patient-002" },
+        "code": {
+          "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "I50.32", "display": "Chronic diastolic (congestive) heart failure" }],
+          "text": "Chronic diastolic heart failure"
+        },
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "onsetDateTime": "2019-02-11"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-002-afib",
+        "subject": { "reference": "Patient/patient-002" },
+        "code": {
+          "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "I48.91", "display": "Unspecified atrial fibrillation" }],
+          "text": "Atrial fibrillation"
+        },
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "onsetDateTime": "2018-07-04"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-002-inr",
+        "status": "final",
+        "subject": { "reference": "Patient/patient-002" },
+        "effectiveDateTime": "2025-01-15",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "6301-6", "display": "INR in Platelet poor plasma by Coagulation assay" }] },
+        "valueQuantity": { "value": 2.8, "unit": "{INR}", "system": "http://unitsofmeasure.org", "code": "{INR}" }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-002-warfarin",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/patient-002" },
+        "authoredOn": "2025-01-15",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "855332", "display": "warfarin sodium 5 MG Oral Tablet" }],
+          "text": "warfarin 5 mg PO daily, adjust to INR 2-3"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-002-furosemide",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/patient-002" },
+        "authoredOn": "2025-01-15",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "310429", "display": "furosemide 40 MG Oral Tablet" }],
+          "text": "furosemide 40 mg PO daily"
+        }
+      }
+    }
+  ]
+}

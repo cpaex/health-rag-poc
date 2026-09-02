@@ -20,23 +20,12 @@ import argparse
 import json
 import os
 import sys
+from pathlib import Path
 
 import boto3
 
-
-def build_retrieval_config(top_k: int, patient_scope: str | None) -> dict:
-    vsc: dict = {
-        "numberOfResults": top_k,
-        # Hybrid = dense (pgvector) + sparse (Aurora full-text GIN index from §4).
-        # This is the only place "hybrid search" is turned on for an Aurora KB.
-        "overrideSearchType": "HYBRID",
-    }
-    cfg: dict = {"vectorSearchConfiguration": vsc}
-    if patient_scope:
-        vsc["filter"] = {
-            "equals": {"key": "patient_scope", "value": patient_scope}
-        }
-    return cfg
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from agent.tools.kb_hybrid_retrieve import build_retrieval_config  # noqa: E402
 
 
 def main() -> int:
@@ -73,11 +62,15 @@ def main() -> int:
 
     if args.patient_scope:
         bad = [
-            r for r in results
+            r
+            for r in results
             if r.get("metadata", {}).get("patient_scope") not in (None, args.patient_scope)
         ]
         if bad:
-            print(f"FAIL: {len(bad)} result(s) outside patient_scope={args.patient_scope}", file=sys.stderr)
+            print(
+                f"FAIL: {len(bad)} result(s) outside patient_scope={args.patient_scope}",
+                file=sys.stderr,
+            )
             return 1
 
     print(json.dumps({"ok": True, "count": len(results)}))

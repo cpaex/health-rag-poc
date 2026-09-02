@@ -1,0 +1,86 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "id": "seed-patient-001",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-001",
+        "identifier": [
+          { "system": "urn:mrn", "value": "MRN-0010001" }
+        ],
+        "name": [{ "family": "Tavares", "given": ["Maria", "L"] }],
+        "gender": "female",
+        "birthDate": "1958-03-14",
+        "telecom": [{ "system": "phone", "value": "617-555-0142", "use": "home" }],
+        "address": [{ "line": ["49 Birchwood Ln"], "city": "Quincy", "state": "MA", "postalCode": "02169" }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-001-htn",
+        "subject": { "reference": "Patient/patient-001" },
+        "code": {
+          "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "I10", "display": "Essential (primary) hypertension" }],
+          "text": "Essential hypertension"
+        },
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "onsetDateTime": "2011-06-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-001-dm2",
+        "subject": { "reference": "Patient/patient-001" },
+        "code": {
+          "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "E11.9", "display": "Type 2 diabetes mellitus without complications" }],
+          "text": "Type 2 diabetes mellitus"
+        },
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "onsetDateTime": "2015-09-20"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-001-a1c",
+        "status": "final",
+        "subject": { "reference": "Patient/patient-001" },
+        "effectiveDateTime": "2024-11-02",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "4548-4", "display": "Hemoglobin A1c/Hemoglobin.total in Blood" }] },
+        "valueQuantity": { "value": 7.4, "unit": "%", "system": "http://unitsofmeasure.org", "code": "%" }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-001-metformin",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/patient-001" },
+        "authoredOn": "2024-11-02",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "860975", "display": "metformin hydrochloride 1000 MG Oral Tablet" }],
+          "text": "metformin 1000 mg PO BID"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-001-lisinopril",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/patient-001" },
+        "authoredOn": "2024-11-02",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "314076", "display": "lisinopril 10 MG Oral Tablet" }],
+          "text": "lisinopril 10 mg PO daily"
+        }
+      }
+    }
+  ]
+}

@@ -13,9 +13,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -e ".[dev]"
+      - run: pip install -e ".[dev,mockfhir]"
       - run: ruff check .
       - run: pytest -m "not aws"
+      - run: python -m ingestion.pipeline --dry-run   # wiring smoke, no AWS
       # Phase 7: add `python evals/run_ragas_ci.py` as a required check.
 
   terraform:

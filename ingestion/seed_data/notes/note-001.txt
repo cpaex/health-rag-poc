@@ -1,0 +1,26 @@
+Radiology Consultation Note
+Patient: Tavares, Maria L    MRN-0010001    DOB 1958-03-14
+Encounter date: 2025-04-18
+Provider: Dr. H. Sandberg, Radiology
+
+HPI:
+62-year-old woman referred for CT angiography of the chest to evaluate exertional
+dyspnea. She has essential hypertension and type 2 diabetes. During a prior
+outpatient CT with iodinated contrast approximately one month ago she reportedly
+"went blotchy and tight in the throat" a few minutes into the injection and the
+study was paused. No prior formal allergy workup. No history of asthma. Takes
+metformin and lisinopril.
+
+Assessment:
+Likely a prior hypersensitivity-type response to iodinated contrast media,
+moderate severity (mucocutaneous plus subjective airway tightness, no documented
+hypotension). Not a true anaphylaxis by the records available, but the reaction
+pattern warrants caution.
+
+Plan:
+- Proceed with non-contrast CT today; defer contrast-enhanced imaging.
+- If contrast study becomes necessary, use a low-osmolar agent with a
+  corticosteroid and antihistamine premedication protocol, and observe for 30
+  minutes post-injection.
+- Document the reaction prominently in the chart.
+- Endocrine and primary care to be notified.

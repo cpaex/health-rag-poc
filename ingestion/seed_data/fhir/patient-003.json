@@ -1,0 +1,84 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "id": "seed-patient-003",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-003",
+        "identifier": [{ "system": "urn:mrn", "value": "MRN-0030003" }],
+        "name": [{ "family": "Nguyen", "given": ["Aisha", "K"] }],
+        "gender": "female",
+        "birthDate": "1991-08-07",
+        "telecom": [{ "system": "phone", "value": "508-555-0173", "use": "mobile" }],
+        "address": [{ "line": ["7 Concord St"], "city": "Framingham", "state": "MA", "postalCode": "01702" }]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-003-asthma",
+        "subject": { "reference": "Patient/patient-003" },
+        "code": {
+          "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "J45.40", "display": "Moderate persistent asthma, uncomplicated" }],
+          "text": "Moderate persistent asthma"
+        },
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "onsetDateTime": "2005-04-19"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "cond-003-migraine",
+        "subject": { "reference": "Patient/patient-003" },
+        "code": {
+          "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10-cm", "code": "G43.909", "display": "Migraine, unspecified, not intractable, without status migrainosus" }],
+          "text": "Migraine without aura"
+        },
+        "clinicalStatus": { "coding": [{ "code": "active" }] },
+        "onsetDateTime": "2013-01-01"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-003-peakflow",
+        "status": "final",
+        "subject": { "reference": "Patient/patient-003" },
+        "effectiveDateTime": "2025-03-08",
+        "code": { "coding": [{ "system": "http://loinc.org", "code": "19935-6", "display": "Maximum expiratory gas flow Respiratory system airway by Peak flow meter" }] },
+        "valueQuantity": { "value": 380, "unit": "L/min", "system": "http://unitsofmeasure.org", "code": "L/min" }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-003-fluticasone",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/patient-003" },
+        "authoredOn": "2025-03-08",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "895994", "display": "fluticasone propionate 0.11 MG/ACTUAT Metered Dose Inhaler" }],
+          "text": "fluticasone 110 mcg, 2 puffs BID"
+        }
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "med-003-sumatriptan",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/patient-003" },
+        "authoredOn": "2025-03-08",
+        "medicationCodeableConcept": {
+          "coding": [{ "system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "313782", "display": "sumatriptan 50 MG Oral Tablet" }],
+          "text": "sumatriptan 50 mg PO at onset, may repeat once"
+        }
+      }
+    }
+  ]
+}

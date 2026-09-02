@@ -1,0 +1,26 @@
+Neurology Clinic Note
+Patient: Nguyen, Aisha K    MRN-0030003
+Encounter date: 2025-02-11
+Provider: Dr. M. Farrow
+
+HPI:
+Migraine without aura since her early twenties. Currently four to six headache
+days per month, throbbing, unilateral, with photophobia and nausea. Sumatriptan
+aborts about 70% of attacks if taken early. Denies medication overuse. Sleep
+irregular due to shift work. No red flag features, neuro exam normal.
+
+Assessment:
+1. Episodic migraine without aura, frequency now meeting threshold for
+   preventive therapy.
+2. Poor sleep hygiene contributing.
+
+Plan:
+- Start topiramate 25 mg nightly, increase by 25 mg weekly to 50 mg twice daily
+  as tolerated.
+- Continue sumatriptan 50 mg for acute attacks, limit to 9 days per month.
+- Headache diary. Sleep hygiene handout.
+- Follow up in 8 weeks to assess response and tolerability.
+
+Medications:
+- topiramate 25 mg PO QHS (new), titrating
+- sumatriptan 50 mg PO PRN migraine

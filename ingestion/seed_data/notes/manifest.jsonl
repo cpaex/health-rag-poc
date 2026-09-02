@@ -1,0 +1,10 @@
+{"file": "note-001.txt", "source_note_id": "note-001", "patient_scope": "patient-001", "patient_id": "patient-001", "note_type": "radiology_consult", "encounter_date": "2025-04-18", "has_headers": true}
+{"file": "note-002.txt", "source_note_id": "note-002", "patient_scope": "patient-001", "patient_id": "patient-001", "note_type": "endocrinology_followup", "encounter_date": "2024-11-02", "has_headers": true}
+{"file": "note-003.txt", "source_note_id": "note-003", "patient_scope": "patient-001", "patient_id": "patient-001", "note_type": "nursing_telephone", "encounter_date": "2025-03-20", "has_headers": false}
+{"file": "note-004.txt", "source_note_id": "note-004", "patient_scope": "patient-002", "patient_id": "patient-002", "note_type": "cardiology_progress", "encounter_date": "2025-01-15", "has_headers": true}
+{"file": "note-005.txt", "source_note_id": "note-005", "patient_scope": "patient-002", "patient_id": "patient-002", "note_type": "anticoagulation_clinic", "encounter_date": "2025-01-22", "has_headers": true}
+{"file": "note-006.txt", "source_note_id": "note-006", "patient_scope": "patient-002", "patient_id": "patient-002", "note_type": "discharge_summary", "encounter_date": "2024-09-07", "has_headers": true}
+{"file": "note-007.txt", "source_note_id": "note-007", "patient_scope": "patient-003", "patient_id": "patient-003", "note_type": "pulmonology_clinic", "encounter_date": "2025-03-08", "has_headers": true}
+{"file": "note-008.txt", "source_note_id": "note-008", "patient_scope": "patient-003", "patient_id": "patient-003", "note_type": "neurology_clinic", "encounter_date": "2025-02-11", "has_headers": true}
+{"file": "note-009.txt", "source_note_id": "note-009", "patient_scope": "patient-003", "patient_id": "patient-003", "note_type": "ed_note", "encounter_date": "2025-01-29", "has_headers": false}
+{"file": "note-010.txt", "source_note_id": "note-010", "patient_scope": "patient-001", "patient_id": "patient-001", "note_type": "radiology_addendum", "encounter_date": "2025-04-18", "has_headers": false}

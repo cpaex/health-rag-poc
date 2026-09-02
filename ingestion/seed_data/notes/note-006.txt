@@ -1,0 +1,32 @@
+Hospital Discharge Summary
+Patient: Okafor, James R    MRN-0020002
+Admission date: 2024-09-03    Discharge date: 2024-09-07
+Attending: Dr. L. Marchetti
+
+HPI:
+Admitted from clinic with a heart failure exacerbation refractory to oral
+diuretic uptitration. Presented with orthopnea, 4 kg weight gain, and bibasilar
+crackles. BNP elevated. Echocardiogram showed preserved ejection fraction at 55%
+with grade 2 diastolic dysfunction, unchanged from prior.
+
+Hospital Course:
+Treated with IV furosemide with net negative fluid balance of 4.2 L over four
+days. Telemetry showed atrial fibrillation with controlled ventricular rate.
+Renal function remained at baseline. Transitioned to oral furosemide 40 mg daily
+prior to discharge, tolerating well.
+
+Assessment:
+1. Diastolic heart failure exacerbation, resolved with diuresis.
+2. Atrial fibrillation, rate controlled, anticoagulated.
+3. Stage 3 chronic kidney disease, at baseline.
+
+Plan:
+- Furosemide 40 mg PO daily, follow up weight log.
+- Continue warfarin and metoprolol.
+- Cardiology follow-up in 2 weeks; anticoagulation clinic in 1 week.
+- Low sodium diet education completed with dietitian.
+
+Discharge Medications:
+- furosemide 40 mg PO daily
+- warfarin 5 mg PO daily
+- metoprolol succinate 50 mg PO daily

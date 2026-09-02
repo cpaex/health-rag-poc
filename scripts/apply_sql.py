@@ -60,8 +60,11 @@ def main() -> int:
             break
         except ClientError as e:
             code = e.response.get("Error", {}).get("Code", "")
-            if code in ("DatabaseResumingException", "StatementTimeoutException") and attempt < 10:
-                print(f"[apply_sql] cluster waking ({code}), retry {attempt}/10...", file=sys.stderr)
+            waking = code in ("DatabaseResumingException", "StatementTimeoutException")
+            if waking and attempt < 10:
+                print(
+                    f"[apply_sql] cluster waking ({code}), retry {attempt}/10...", file=sys.stderr
+                )
                 time.sleep(10)
                 continue
             raise

@@ -1,0 +1,27 @@
+Cardiology Progress Note
+Patient: Okafor, James R    MRN-0020002
+Encounter date: 2025-01-15
+Provider: Dr. L. Marchetti
+
+HPI:
+76-year-old man with chronic diastolic heart failure and atrial fibrillation,
+presenting with three days of increasing ankle swelling and two-pillow orthopnea.
+Weight up 3 kg from dry weight. No chest pain. Adherent to medications. Dietary
+sodium likely high over the holidays.
+
+Assessment:
+1. Acute on chronic diastolic heart failure exacerbation, volume overloaded.
+2. Atrial fibrillation, rate controlled, anticoagulated on warfarin. INR today 2.8.
+3. Chronic kidney disease stage 3, stable.
+
+Plan:
+- Increase furosemide to 40 mg twice daily for 5 days, then reassess.
+- Strict sodium restriction, daily weights, fluid limit 1.5 L.
+- Continue warfarin 5 mg daily; next INR in 1 week.
+- Continue metoprolol succinate 50 mg daily for rate control.
+- Return sooner if weight up more than 2 kg or worsening breathlessness.
+
+Medications:
+- furosemide 40 mg PO BID (increased)
+- warfarin 5 mg PO daily
+- metoprolol succinate 50 mg PO daily
