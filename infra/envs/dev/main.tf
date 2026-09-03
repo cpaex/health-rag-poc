@@ -2,8 +2,8 @@
 #
 # Modules are enabled phase by phase. Keep `terraform plan` clean at every step.
 #   Phase 1: network, data_aurora, ingestion
-#   Phase 2 (ACTIVE): knowledge_base
-#   Phase 5:          guardrails
+#   Phase 2: knowledge_base
+#   Phase 5 (ACTIVE): guardrails
 #   Phase 6:          agentcore, observability
 
 # ---------------------------------------------------------------------------
@@ -53,10 +53,10 @@ module "knowledge_base" {
 # ---------------------------------------------------------------------------
 # Phase 5 — Guardrails
 # ---------------------------------------------------------------------------
-# module "guardrails" {
-#   source      = "../../modules/guardrails"
-#   name_prefix = var.name_prefix
-# }
+module "guardrails" {
+  source      = "../../modules/guardrails"
+  name_prefix = var.name_prefix
+}
 
 # ---------------------------------------------------------------------------
 # Phase 6 — AgentCore + observability

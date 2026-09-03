@@ -21,7 +21,7 @@ architecture document and glossary (if supplied).
 | 2 | Bedrock Knowledge Base wired to Aurora (hybrid search) | ✅ module + `kb_smoke_test.py` written; `validate`+`tflint` clean; deploy → [DEPLOY.md §2](DEPLOY.md) |
 | 3 | Ingestion pipeline + seed data | ✅ seed data + pipeline + `seed_demo_data.sh` (`--dry-run` works); unit-tested; deploy → [DEPLOY.md §3](DEPLOY.md) |
 | 4 | Supervisor agent + 4 tools (local mode) | ✅ Strands supervisor + 4 tools + multi-step strategy + mock FHIR server; unit-tested (incl. contrast-dye sequence); live run → [DEPLOY.md §4](DEPLOY.md) |
-| 5 | Guardrails + mocked identity/scope enforcement | ⬜ |
+| 5 | Guardrails + mocked identity/scope enforcement | ✅ `aws_bedrock_guardrail` module + `ApplyGuardrail` wrapper (both sides) + `identity.py` scope/escalation guard; unit-tested; deploy → [DEPLOY.md §5](DEPLOY.md) |
 | 6 | AgentCore deployment | ⬜ |
 | 7 | Evaluation: golden set, RAGAS CI, Bedrock Evaluations | ⬜ |
 | 8 | Streamlit UI (local + agentcore modes) | ⬜ |

@@ -4,13 +4,13 @@ One supervisor agent routes to specialized capability by *retrieval strategy*:
 ontology resolution, semantic (hybrid) search, structured FHIR lookup, reranking,
 or the composed multi-step strategy in ``agent.retrieval_strategy``.
 
-The real run (Bedrock model + live tools) is exercised in DEPLOY.md §4. Locally,
-``build_tools`` / ``build_supervisor`` assemble without credentials, and the
-routing logic is unit-tested through ``agent.retrieval_strategy`` with fakes.
+The real run (Bedrock model + live tools) is exercised in DEPLOY.md §4/§5.
+Locally, ``build_tools`` / ``build_supervisor`` assemble without credentials, and
+the routing logic is unit-tested through ``agent.retrieval_strategy`` with fakes.
 
-GUARDRAIL WIRE POINT (Phase 5): the final model invocation inside ``answer`` must
-be wrapped with Bedrock Guardrails on both input and output — see
-``_guarded_prompt`` / ``_guard_output`` placeholders below.
+``answer()`` enforces, in order: identity/patient-scope (``agent.identity``) →
+Bedrock Guardrails on the INPUT → the model → Bedrock Guardrails on the OUTPUT
+(``agent.guardrails``). Both guardrail directions run around the final model call.
 """
 
 from __future__ import annotations
@@ -45,6 +45,8 @@ class SupervisorConfig:
     aurora_database: str = "clinical_rag"
     fhir_base_url: str | None = None
     rerank_model_arn: str | None = None
+    guardrail_id: str | None = None
+    guardrail_version: str | None = None
     region: str | None = None
 
     @classmethod
@@ -56,6 +58,8 @@ class SupervisorConfig:
             aurora_database=os.environ.get("AURORA_DATABASE_NAME", "clinical_rag"),
             fhir_base_url=os.environ.get("MOCK_FHIR_ENDPOINT_URL"),
             rerank_model_arn=os.environ.get("RERANK_MODEL_ARN"),
+            guardrail_id=os.environ.get("BEDROCK_GUARDRAIL_ID"),
+            guardrail_version=os.environ.get("BEDROCK_GUARDRAIL_VERSION"),
             region=os.environ.get("AWS_REGION"),
         )
 
@@ -167,9 +171,17 @@ def build_tools(config: SupervisorConfig | None = None) -> list[Any]:
 def _build_model(config: SupervisorConfig) -> Any:
     from strands.models import BedrockModel
 
-    # GUARDRAIL WIRE POINT (Phase 5): pass guardrail id/version into the model
-    # config (or wrap invocations) so both input and output are filtered.
     return BedrockModel(region_name=config.region)
+
+
+def build_guardrail(config: SupervisorConfig | None = None, *, client: Any = None) -> Any:
+    """The Bedrock Guardrail applied to both sides of the final model call."""
+    from agent.guardrails import Guardrail
+
+    config = config or SupervisorConfig.from_env()
+    return Guardrail(
+        config.guardrail_id, config.guardrail_version, client=client, region=config.region
+    )
 
 
 def build_supervisor(
@@ -191,19 +203,58 @@ def build_supervisor(
     )
 
 
-def _guarded_prompt(text: str) -> str:
-    # Phase 5: run Bedrock Guardrails on the input side here.
-    return text
+def answer(
+    query: str,
+    patient_scope: str,
+    *,
+    mode: str = "local",
+    config: SupervisorConfig | None = None,
+    model: Any = None,
+    guardrail: Any = None,
+    token: str | dict | None = None,
+) -> dict:
+    """Run the supervisor for one question.
 
+    Order of enforcement (all *before* the model when possible):
+      1. identity — if ``token`` is given, verify it, pin the effective patient
+         scope to what the token authorizes, and reject scope-escalation attempts
+         in the query (``agent.identity.guard_request``).
+      2. Bedrock Guardrails on the INPUT — prompt-attack / denied-topics / PII.
+      3. the Strands supervisor + Bedrock model.
+      4. Bedrock Guardrails on the OUTPUT — before the answer is returned.
 
-def _guard_output(text: str) -> str:
-    # Phase 5: run Bedrock Guardrails on the output side here.
-    return text
+    Real Bedrock call — see DEPLOY.md §5.
+    """
+    config = config or SupervisorConfig.from_env()
+    guardrail = guardrail if guardrail is not None else build_guardrail(config)
 
+    effective_scope = patient_scope
+    if token is not None:
+        from agent.identity import guard_request
 
-def answer(query: str, patient_scope: str, *, mode: str = "local", **kw: Any) -> dict:
-    """Run the supervisor for one question. Real Bedrock call — see DEPLOY.md §4."""
-    supervisor = build_supervisor(mode=mode, **kw)
-    result = supervisor(_guarded_prompt(f"[patient_scope={patient_scope}] {query}"))
-    text = _guard_output(str(result))
-    return {"answer": text, "patient_scope": patient_scope}
+        effective_scope, _claims = guard_request(query, patient_scope, token)
+
+    prompt = f"[patient_scope={effective_scope}] {query}"
+
+    gi = guardrail.check_input(prompt)
+    if gi.blocked:
+        return {
+            "answer": gi.text,
+            "patient_scope": effective_scope,
+            "blocked": True,
+            "blocked_stage": "input",
+        }
+
+    supervisor = build_supervisor(mode=mode, config=config, model=model)
+    result = str(supervisor(gi.text))
+
+    go = guardrail.check_output(result)
+    if go.blocked:
+        return {
+            "answer": go.text,
+            "patient_scope": effective_scope,
+            "blocked": True,
+            "blocked_stage": "output",
+        }
+
+    return {"answer": go.text, "patient_scope": effective_scope, "blocked": False}

@@ -31,6 +31,7 @@ EXPECTED_PATHS = [
     "ingestion/seed_data/notes",
     "agent/supervisor.py",
     "agent/retrieval_strategy.py",
+    "agent/guardrails.py",
     "agent/models.py",
     "agent/identity.py",
     "agent/runtime_entrypoint.py",

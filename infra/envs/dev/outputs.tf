@@ -48,8 +48,13 @@ output "knowledge_base_data_source_id" {
 }
 
 # ── Phase 5 ────────────────────────────────────────────────────────────────
-# output "bedrock_guardrail_id"      { value = module.guardrails.guardrail_id }
-# output "bedrock_guardrail_version" { value = module.guardrails.guardrail_version }
+output "bedrock_guardrail_id" {
+  value = module.guardrails.guardrail_id
+}
+
+output "bedrock_guardrail_version" {
+  value = module.guardrails.guardrail_version
+}
 
 # ── Phase 6 ────────────────────────────────────────────────────────────────
 # output "agentcore_runtime_arn" { value = module.agentcore.agent_runtime_arn }

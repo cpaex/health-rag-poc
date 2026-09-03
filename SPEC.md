@@ -77,8 +77,9 @@ clinical-agentic-rag/
 ├── agent/
 │   ├── harness_config.yaml          # AgentCore Harness: model, system prompt ref, memory, gateway refs
 │   ├── system_prompt.md
-│   ├── supervisor.py                # Strands "Agent-as-Tools" orchestrator
+│   ├── supervisor.py                # Strands "Agent-as-Tools" orchestrator; identity + guardrails wired in answer()
 │   ├── retrieval_strategy.py        # deterministic multi-step retrieve (arch doc Step 10), unit-tested
+│   ├── guardrails.py                # bedrock-runtime:ApplyGuardrail wrapper (input + output)
 │   ├── models.py                    # pydantic tool-contract types
 │   ├── tools/
 │   │   ├── kb_hybrid_retrieve.py
