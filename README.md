@@ -22,7 +22,7 @@ architecture document and glossary (if supplied).
 | 3 | Ingestion pipeline + seed data | ✅ seed data + pipeline + `seed_demo_data.sh` (`--dry-run` works); unit-tested; deploy → [DEPLOY.md §3](DEPLOY.md) |
 | 4 | Supervisor agent + 4 tools (local mode) | ✅ Strands supervisor + 4 tools + multi-step strategy + mock FHIR server; unit-tested (incl. contrast-dye sequence); live run → [DEPLOY.md §4](DEPLOY.md) |
 | 5 | Guardrails + mocked identity/scope enforcement | ✅ `aws_bedrock_guardrail` module + `ApplyGuardrail` wrapper (both sides) + `identity.py` scope/escalation guard; unit-tested; deploy → [DEPLOY.md §5](DEPLOY.md) |
-| 6 | AgentCore deployment | ⬜ |
+| 6 | AgentCore deployment assets | ✅ `agentcore`+`observability` TF modules, ARM64 `Dockerfile`, `runtime_entrypoint.py`, `deploy.sh`; `validate`+`tflint` clean; deploy → [DEPLOY.md §6](DEPLOY.md) |
 | 7 | Evaluation: golden set, RAGAS CI, Bedrock Evaluations | ⬜ |
 | 8 | Streamlit UI (local + agentcore modes) | ⬜ |
 

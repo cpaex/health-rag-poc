@@ -214,8 +214,8 @@ resource "aws_bedrockagent_knowledge_base" "this" {
 }
 
 resource "aws_bedrockagent_data_source" "raw_notes" {
-  knowledge_base_id   = aws_bedrockagent_knowledge_base.this.id
-  name                = "${var.name_prefix}-raw-notes"
+  knowledge_base_id    = aws_bedrockagent_knowledge_base.this.id
+  name                 = "${var.name_prefix}-raw-notes"
   data_deletion_policy = "RETAIN"
 
   data_source_configuration {

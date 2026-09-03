@@ -48,6 +48,7 @@ clinical-agentic-rag/
 ├── README.md
 ├── SPEC.md                        # this file
 ├── DEPLOY.md                      # ordered runbook: terraform apply + post-apply steps for every resource (see Phase 9)
+├── Dockerfile                     # ARM64 AgentCore Runtime image (Phase 6)
 ├── docs/                          # architecture doc + glossary go here if supplied
 ├── .env.example
 ├── pyproject.toml

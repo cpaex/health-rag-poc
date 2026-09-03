@@ -270,12 +270,67 @@ notes). Guardrail never intervenes → check `BEDROCK_GUARDRAIL_VERSION` (use
 
 ---
 
-## 6. AgentCore deployment   _(pending Phase 6)_
+## 6. AgentCore deployment
 
-Any one-time account-level Observability enable (Transaction Search / X-Ray trace
-ingestion); ARM64 build & package of the runtime; `terraform apply` the
-`agentcore` + `observability` modules; invoke the deployed runtime
-(`agentcore invoke` / `InvokeAgentRuntime`); `AGENT_MODE=agentcore` smoke test.
+Requires §1–§5. **Needs Docker** with `buildx` (the runtime image is built
+`linux/arm64` and pushed to ECR by the `agentcore` module's `null_resource`).
+
+**Set the generation model** the supervisor uses — `agent/supervisor.py::_build_model`
+constructs a `strands.models.BedrockModel`; give it a model id (env or
+`harness_config.yaml`) and confirm that model is enabled in the region (§0).
+
+**Apply:**
+
+```bash
+scripts/deploy.sh --apply        # terraform apply, then writes .env + agent/harness_config.yaml
+# or, by hand:
+#   terraform -chdir=infra/envs/dev apply
+```
+
+What it creates: ECR repo + ARM64 image build/push, runtime execution IAM role
+(AWS runtime-permissions baseline + KB `Retrieve` / Aurora Data API / `ApplyGuardrail`
+/ `Rerank`), `aws_bedrockagentcore_memory` (+ SEMANTIC strategy), the
+`aws_bedrockagentcore_agent_runtime` (container, `network_mode=PUBLIC`) and its
+`DEV` endpoint, and the CloudWatch log groups.
+
+**Optional — Gateway (JWT/SMART-on-FHIR extension point):** off by default. To
+turn on, set `create_gateway = true` + `jwt_discovery_url` (real Cognito/Entra
+OIDC discovery URL) in `terraform.tfvars`.
+
+**Optional — CloudWatch Transaction Search (account + region wide):** set
+`enable_transaction_search = true` in `terraform.tfvars` (creates
+`aws_xray_trace_segment_destination` + `aws_xray_indexing_rule`). Do this once,
+in one environment — it changes X-Ray billing account-wide. Equivalent CLI:
+`aws xray update-trace-segment-destination --destination CloudWatchLogs` +
+`aws xray update-indexing-rule --name Default --rule '{"Probabilistic":{"DesiredSamplingPercentage":100}}'`.
+
+**Verify:**
+
+```bash
+aws bedrock-agentcore-control get-agent-runtime \
+  --agent-runtime-id "$(terraform -chdir=infra/envs/dev output -raw agentcore_runtime_id)"
+
+# invoke the deployed runtime
+python - <<'PY'
+import boto3, json, os
+c = boto3.client("bedrock-agentcore")
+r = c.invoke_agent_runtime(
+    agentRuntimeArn=os.environ["AGENTCORE_RUNTIME_ARN"],
+    payload=json.dumps({"prompt": "What contrast precautions apply?",
+                        "patient_scope": "patient-001"}).encode(),
+)
+print(r["response"].read().decode())
+PY
+```
+
+Expected: runtime `READY`; the invoke returns a cited answer. Then point the UI
+at it with `AGENT_MODE=agentcore` (§8).
+
+**If this fails:** image build → ensure `docker buildx` works and you're logged
+into ECR. Runtime stuck `CREATING`/`FAILED` → check
+`/aws/bedrock-agentcore/runtimes/<id>` logs; usually a missing env var or the
+exec role lacking `bedrock:InvokeModel` for the chosen model. `ResourceNotFound`
+on invoke → wait for `READY`, or the endpoint isn't created yet.
 
 ---
 

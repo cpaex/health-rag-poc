@@ -57,4 +57,18 @@ output "bedrock_guardrail_version" {
 }
 
 # ── Phase 6 ────────────────────────────────────────────────────────────────
-# output "agentcore_runtime_arn" { value = module.agentcore.agent_runtime_arn }
+output "agentcore_runtime_arn" {
+  value = module.agentcore.agent_runtime_arn
+}
+
+output "agentcore_runtime_id" {
+  value = module.agentcore.agent_runtime_id
+}
+
+output "agentcore_ecr_repository_url" {
+  value = module.agentcore.ecr_repository_url
+}
+
+output "agentcore_memory_id" {
+  value = module.agentcore.memory_id
+}

@@ -3,8 +3,8 @@
 # Modules are enabled phase by phase. Keep `terraform plan` clean at every step.
 #   Phase 1: network, data_aurora, ingestion
 #   Phase 2: knowledge_base
-#   Phase 5 (ACTIVE): guardrails
-#   Phase 6:          agentcore, observability
+#   Phase 5: guardrails
+#   Phase 6 (ACTIVE): agentcore, observability
 
 # ---------------------------------------------------------------------------
 # Phase 1 — foundation
@@ -61,12 +61,34 @@ module "guardrails" {
 # ---------------------------------------------------------------------------
 # Phase 6 — AgentCore + observability
 # ---------------------------------------------------------------------------
-# module "agentcore" {
-#   source      = "../../modules/agentcore"
-#   name_prefix = var.name_prefix
-# }
-#
-# module "observability" {
-#   source      = "../../modules/observability"
-#   name_prefix = var.name_prefix
-# }
+module "agentcore" {
+  source = "../../modules/agentcore"
+
+  name_prefix = var.name_prefix
+  source_dir  = abspath("${path.module}/../../..") # repo root: Dockerfile + agent/
+
+  knowledge_base_arn = module.knowledge_base.knowledge_base_arn
+  aurora_cluster_arn = module.data_aurora.cluster_arn
+  aurora_secret_arn  = module.data_aurora.secret_arn
+  guardrail_arn      = module.guardrails.guardrail_arn
+
+  runtime_environment = {
+    AGENT_MODE                = "agentcore"
+    KNOWLEDGE_BASE_ID         = module.knowledge_base.knowledge_base_id
+    AURORA_CLUSTER_ARN        = module.data_aurora.cluster_arn
+    AURORA_SECRET_ARN         = module.data_aurora.secret_arn
+    AURORA_DATABASE_NAME      = module.data_aurora.database_name
+    BEDROCK_GUARDRAIL_ID      = module.guardrails.guardrail_id
+    BEDROCK_GUARDRAIL_VERSION = module.guardrails.guardrail_version
+    RERANK_MODEL_ARN          = var.rerank_model_arn
+    MOCK_FHIR_ENDPOINT_URL    = var.mock_fhir_endpoint_url
+  }
+}
+
+module "observability" {
+  source      = "../../modules/observability"
+  name_prefix = var.name_prefix
+
+  # Account/region-wide — enable deliberately, once. See DEPLOY.md §6.
+  enable_transaction_search = var.enable_transaction_search
+}
