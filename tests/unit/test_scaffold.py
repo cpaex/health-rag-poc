@@ -46,6 +46,7 @@ EXPECTED_PATHS = [
     "agent/tools/fhir_query.py",
     "agent/tools/rerank.py",
     "evals/golden_questions.jsonl",
+    "evals/golden.py",
     "evals/run_ragas_ci.py",
     "evals/run_bedrock_evaluations.py",
     "ui/streamlit_app.py",

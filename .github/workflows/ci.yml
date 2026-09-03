@@ -16,8 +16,9 @@ jobs:
       - run: pip install -e ".[dev,mockfhir]"
       - run: ruff check .
       - run: pytest -m "not aws"
-      - run: python -m ingestion.pipeline --dry-run   # wiring smoke, no AWS
-      # Phase 7: add `python evals/run_ragas_ci.py` as a required check.
+      - run: python -m ingestion.pipeline --dry-run          # wiring smoke, no AWS
+      - run: python -m evals.run_ragas_ci --self-check       # golden set + gate logic (no AWS)
+      # DEPLOY.md §7: the real RAGAS run (needs the deployed stack) is manual.
 
   terraform:
     runs-on: ubuntu-latest

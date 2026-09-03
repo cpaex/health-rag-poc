@@ -334,11 +334,55 @@ on invoke → wait for `READY`, or the endpoint isn't created yet.
 
 ---
 
-## 7. Evaluation   _(pending Phase 7)_
+## 7. Evaluation
 
-Live RAGAS run against the deployed stack to confirm the faithfulness threshold
-gate fires; `python evals/run_bedrock_evaluations.py` to launch a managed job and
-print its job ID; where to read the results.
+Requires §1–§5 (agent answering end-to-end in local mode).
+
+**CI (no AWS)** already runs `python -m evals.run_ragas_ci --self-check` on every
+PR — validates the 12-case golden set, category coverage, the CI-subset selector,
+and the faithfulness gate logic. Nothing to do here for that.
+
+**Live RAGAS run** (needs Bedrock — the runner calls the supervisor + an LLM
+judge):
+
+```bash
+# ensure .env has KNOWLEDGE_BASE_ID / AURORA_* / BEDROCK_GUARDRAIL_* / RERANK_MODEL_ARN
+pip install -e ".[evals]"
+python -m evals.run_ragas_ci            # full run over the CI subset (6 cases)
+```
+
+Expected: JSON report with `passed: true`; `ragas.scores.faithfulness >= 0.80`
+(the hard gate — `FAITHFULNESS_THRESHOLD`); `context_precision` / `context_recall`
+reported as soft warnings only. `non_scorable_failures` must be empty (the
+guardrail-refusal cases g11/g12 came back `blocked`, g10 declined to answer).
+Exit code is non-zero if faithfulness drops below threshold or a refusal leaked.
+
+**Managed Bedrock Evaluations job** (costs money, minutes–hours, not a gate):
+
+```bash
+python -m evals.run_bedrock_evaluations \
+  --job-name clinical-rag-$(date +%Y%m%d-%H%M) \
+  --role-arn      "$BEDROCK_EVAL_ROLE_ARN" \
+  --knowledge-base-id "$KNOWLEDGE_BASE_ID" \
+  --generation-model-arn "$GENERATION_MODEL_ARN" \
+  --dataset-s3-uri "s3://$RAW_NOTES_BUCKET/evals/golden.jsonl" \
+  --output-s3-uri  "s3://$RAW_NOTES_BUCKET/evals/out/"
+```
+
+It writes the golden set (scorable cases only) to `--dataset-s3-uri`, then calls
+`bedrock:CreateEvaluationJob` (`applicationType=RagEvaluation`, retrieve-only +
+retrieve-and-generate over the KB) and prints `{jobArn, jobName, status}`. Read
+results in the Bedrock console → *Evaluations*, or from `--output-s3-uri`.
+
+`--role-arn` needs an IAM role Bedrock Evaluations can assume with access to the
+KB, the models, and both S3 prefixes (not provisioned by this repo's Terraform —
+create it or reuse an existing Bedrock service role).
+
+**If this fails:** `ValidationException` on `CreateEvaluationJob` → a
+`metricNames` identifier or `taskType` is stale; reconcile
+`evals/run_bedrock_evaluations.py` against the Bedrock console's metric list.
+RAGAS `faithfulness` unexpectedly low → inspect the printed contexts; usually the
+retrieval broadened poorly or the generation added uncited claims.
 
 ---
 
