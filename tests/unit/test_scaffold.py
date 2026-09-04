@@ -57,6 +57,7 @@ EXPECTED_PATHS = [
     "scripts/apply_sql.py",
     "scripts/kb_smoke_test.py",
     "scripts/run_mock_fhir.sh",
+    "scripts/env_from_tf.sh",
 ]
 
 

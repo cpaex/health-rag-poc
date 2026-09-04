@@ -25,14 +25,23 @@ architecture document and glossary (if supplied).
 | 6 | AgentCore deployment assets | ✅ `agentcore`+`observability` TF modules, ARM64 `Dockerfile`, `runtime_entrypoint.py`, `deploy.sh`; `validate`+`tflint` clean; deploy → [DEPLOY.md §6](DEPLOY.md) |
 | 7 | Evaluation: golden set, RAGAS CI, Bedrock Evaluations | ✅ 12-case golden set, `run_ragas_ci.py` (+ `--self-check` in CI), `run_bedrock_evaluations.py`; unit-tested; live run → [DEPLOY.md §7](DEPLOY.md) |
 | 8 | Streamlit UI (local + agentcore modes) | ✅ `ui/streamlit_app.py` + `ui/backend.py`; dual-mode dispatch + citations unit-tested; starts headless (HTTP 200); run → [DEPLOY.md §8](DEPLOY.md) |
+| 9 | Deployment guide assembled | ✅ [DEPLOY.md](DEPLOY.md) is one front-to-back runbook (§0 prereqs → §1–§8 staged `-target` applies → §9 reverse-order teardown), with `scripts/env_from_tf.sh` keeping `.env` in sync |
 
-## Quick start (Phase 0)
+**All 9 phases are code-complete.** Everything above is local files, validated
+(`terraform validate`/`tflint`/`ruff`/`shellcheck`/`pytest` all clean, 154 tests
+passing) — nothing has been applied to AWS. Deployment is a separate, deliberate
+step: work through [DEPLOY.md](DEPLOY.md) when you're ready to spend money.
+
+## Quick start (local dev, no AWS)
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
-pytest            # empty suite, should pass
+pip install -e ".[dev,mockfhir]"
+pytest                                  # 154 tests, all mocked — no AWS calls
+python -m ingestion.pipeline --dry-run  # exercise the ingestion pipeline wiring
 ```
+
+To go from here to a running, deployed system, see [DEPLOY.md](DEPLOY.md).
 
 ## Layout
 

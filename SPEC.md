@@ -106,6 +106,7 @@ clinical-agentic-rag/
     ├── deploy.sh
     ├── apply_sql.py                 # RDS Data API SQL runner (schema bootstrap + verify)
     ├── kb_smoke_test.py             # KB Retrieve HYBRID smoke test
+    ├── env_from_tf.sh               # sync .env from terraform output (DEPLOY.md)
     ├── run_mock_fhir.sh
     └── seed_demo_data.sh
 ```
