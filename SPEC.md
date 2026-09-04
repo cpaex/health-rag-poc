@@ -96,7 +96,8 @@ clinical-agentic-rag/
 │   ├── run_bedrock_evaluations.py
 │   └── run_ragas_ci.py
 ├── ui/
-│   └── streamlit_app.py
+│   ├── streamlit_app.py
+│   └── backend.py                  # mode dispatch + citation rendering (unit-tested, no Streamlit)
 ├── tests/
 │   ├── unit/                        # no AWS calls, mocked via moto/fixtures
 │   └── integration/                 # marked @pytest.mark.aws, real creds, run manually

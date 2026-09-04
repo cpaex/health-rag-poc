@@ -386,10 +386,37 @@ retrieval broadened poorly or the generation added uncited claims.
 
 ---
 
-## 8. UI   _(pending Phase 8)_
+## 8. UI
 
-`streamlit run ui/streamlit_app.py` in both `local` and `agentcore` modes;
-end-to-end answer with visible citations.
+```bash
+pip install -e ".[ui]"
+# ensure .env has the values from §1/§2/§5 (+ §6 for agentcore mode)
+```
+
+**Local mode** (in-process Strands supervisor — needs §1–§5):
+
+```bash
+AGENT_MODE=local streamlit run ui/streamlit_app.py
+# also start the mock FHIR endpoint in another shell (DEPLOY.md §4) if fhir_query is used
+```
+
+**AgentCore mode** (deployed runtime — needs §6, `AGENTCORE_RUNTIME_ARN` set):
+
+```bash
+AGENT_MODE=agentcore streamlit run ui/streamlit_app.py
+```
+
+**Verify (either mode):** pick a patient scope in the sidebar, ask
+"Has this patient reacted badly to imaging contrast, and what precautions apply
+next time?" for `patient-001` → the answer renders with a **Sources:**
+`note-001`, `note-003`, `note-010` line. Switch the sidebar to a different
+patient and confirm cross-patient questions return nothing / are refused. The
+"Raw response" expander shows the underlying `{answer, blocked, ...}` dict.
+
+**If this fails:** blank answer + `AGENTCORE_RUNTIME_ARN not set` → populate
+`.env` (or `scripts/deploy.sh --apply` writes it). Local mode
+`NoCredentialsError` / `AccessDenied` → `aws sso login` and confirm model access
+(§0). Import error on start → `pip install -e ".[ui]"`.
 
 ---
 

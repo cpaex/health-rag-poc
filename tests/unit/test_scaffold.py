@@ -50,6 +50,7 @@ EXPECTED_PATHS = [
     "evals/run_ragas_ci.py",
     "evals/run_bedrock_evaluations.py",
     "ui/streamlit_app.py",
+    "ui/backend.py",
     "scripts/prereq.sh",
     "scripts/deploy.sh",
     "scripts/seed_demo_data.sh",

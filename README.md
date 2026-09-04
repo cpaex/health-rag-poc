@@ -24,7 +24,7 @@ architecture document and glossary (if supplied).
 | 5 | Guardrails + mocked identity/scope enforcement | ✅ `aws_bedrock_guardrail` module + `ApplyGuardrail` wrapper (both sides) + `identity.py` scope/escalation guard; unit-tested; deploy → [DEPLOY.md §5](DEPLOY.md) |
 | 6 | AgentCore deployment assets | ✅ `agentcore`+`observability` TF modules, ARM64 `Dockerfile`, `runtime_entrypoint.py`, `deploy.sh`; `validate`+`tflint` clean; deploy → [DEPLOY.md §6](DEPLOY.md) |
 | 7 | Evaluation: golden set, RAGAS CI, Bedrock Evaluations | ✅ 12-case golden set, `run_ragas_ci.py` (+ `--self-check` in CI), `run_bedrock_evaluations.py`; unit-tested; live run → [DEPLOY.md §7](DEPLOY.md) |
-| 8 | Streamlit UI (local + agentcore modes) | ⬜ |
+| 8 | Streamlit UI (local + agentcore modes) | ✅ `ui/streamlit_app.py` + `ui/backend.py`; dual-mode dispatch + citations unit-tested; starts headless (HTTP 200); run → [DEPLOY.md §8](DEPLOY.md) |
 
 ## Quick start (Phase 0)
 
